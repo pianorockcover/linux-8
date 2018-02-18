@@ -3,8 +3,9 @@ clear
 tput civis -- invisible
 
 declare -A field
-rows=10
-columns=35
+rows=20
+columns=40
+planets=0
 
 while [ "$1" != "" ]
 do
@@ -81,18 +82,19 @@ function generateField () {
    fi
 
    # Draw/remove object 
-   if [ "$2" = true ] ; then 
+   if [ "$2" = true ] && [ "${field[$newObjectI,$newObjectJ]}" != "0" ]; then 
       if [ "${field[$newObjectI,$newObjectJ]}" != "-1" ] ; then 
          field[$newObjectI,$newObjectJ]="-1"
+         ((planets++))
       else
          field[$newObjectI,$newObjectJ]="1"
+         ((planets--))
       fi
    fi
 
    # Draw player
-   printf "\033c"
-   tput civis -- invisible
 
+   gameMap=$'\e[1;37;3m'"Visited the planets: [$planets]" 
    for ((i=1; i<=rows; i++)) do
       output=''
        for ((j=1; j<=columns; j++)) do
@@ -119,8 +121,13 @@ function generateField () {
          fi
        done
 
-       echo $output
+       # $output="$output"$'\n\r'
+       gameMap="$gameMap"$'\n'"$output"
    done   
+
+   printf "\033c"
+   tput civis -- invisible
+   printf "$gameMap"
 }
 
 # Rendering a main menu
@@ -150,11 +157,13 @@ do
    s) generateField "s" ;;
    d) generateField "d" ;;
    e) generateField "" true ;;
+
+   x)   
+      tput cnorm -- normal
+      exit 0;;
    
    *) generateField;;
 
-   x)   
-      tput cnorm   -- normal
-      exit 0;;
+   
    esac
 done
