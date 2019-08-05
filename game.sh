@@ -94,7 +94,7 @@ function generateField () {
 
    # Draw player
 
-   gameMap=$'\e[1;37;3m'"Visited the planets: [$planets]" 
+   gameMap=$'\e[1;37;3m'"\nVisited planets: [$planets]" 
    for ((i=1; i<=rows; i++)) do
       output=''
        for ((j=1; j<=columns; j++)) do

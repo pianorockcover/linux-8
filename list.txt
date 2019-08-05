@@ -1,8 +1,0 @@
-DB|Size_in_MB
-foobar|11011.2
-barfoo|4582.9
-donkey|4220.8
-shoryuken|555.9
-hadouken|220.0
-kong|214.8
-super_mario_bros_p|211.1
